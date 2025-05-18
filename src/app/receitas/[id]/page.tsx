@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { ReceitaProps } from "../page";
+import { ReceitaInfo } from "./components/ReceitaInfo";
 
 export default async function ReceitaID({params}: {params: Promise<{id : string}>}) {
     
@@ -9,20 +11,13 @@ export default async function ReceitaID({params}: {params: Promise<{id : string}
 
     return (
         <div>
-            <h1>Receita Número {id}</h1>
-
-            <h2>{data.name}</h2><br></br>
-            <h2>
-                {data.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-            ))}
-            </h2>
             <br></br>
-            <h2>
-                {data.instructions.map((instruction, index) => (
-                <li key={index}>{instruction}</li>
-            ))}
-            </h2>
+            <h1 className="text-4xl font-bold text-center">{data.name}</h1>
+            <br></br>
+
+            <Suspense fallback={<h1>Carregando...</h1>}>
+                <ReceitaInfo id={id}/>
+            </Suspense>
         </div>
     )
 }
